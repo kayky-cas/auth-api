@@ -1,6 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
+import { ALLOW_UNAUTHORIZED_REQUEST_KEY } from '../meta/allow-unauthorized-request.metadata';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') implements CanActivate {
@@ -8,10 +9,10 @@ export class JwtAuthGuard extends AuthGuard('jwt') implements CanActivate {
     super();
   }
   canActivate(context: ExecutionContext) {
-    const allowUnauthorizedRequest = this.reflector.get<boolean>(
-      'allowUnauthorizedRequest',
+    const allow = this.reflector.get<boolean>(
+      ALLOW_UNAUTHORIZED_REQUEST_KEY,
       context.getHandler(),
     );
-    return allowUnauthorizedRequest || super.canActivate(context);
+    return allow || super.canActivate(context);
   }
 }

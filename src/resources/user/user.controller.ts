@@ -5,7 +5,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from '~@resources/auth/guard/jwt-auth.guard';
+import { JwtAuthGuard } from '~@resources/auth/guards/jwt-auth.guard';
 import { PasswordEncryptService } from '~@services/password-encrypt/password-encrypt.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
