@@ -2,20 +2,20 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { env } from '~@environment/env.constants';
+import { JwtSingedUser } from '../dto/jwt-singed-user.dto';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
+      ignoreExpiration: true,
       secretOrKey: env.API_TOKEN,
     });
   }
 
-  async validate(payload: any) {
+  async validate(payload: JwtSingedUser) {
     const { sub, username, name } = payload;
-
     return { id: sub, username, name };
   }
 }
