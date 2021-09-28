@@ -4,7 +4,7 @@ import { env } from '~@environment/env.constants';
 
 @Injectable()
 export class PasswordEncryptService {
-  private secretKey = env.API_TOKEN;
+  private secretKey = env.API_KEY;
 
   sing(password: string) {
     return CryptoJS.AES.encrypt(password, this.secretKey).toString();

@@ -14,8 +14,8 @@ import { PasswordEncryptService } from '~@services/password-encrypt/password-enc
     UserModule,
     PassportModule,
     JwtModule.register({
-      secret: env.API_TOKEN,
-      signOptions: { expiresIn: '60s' },
+      secret: env.API_KEY,
+      signOptions: { expiresIn: env.SESSION_TIMEOUT + 's' },
     }),
   ],
   controllers: [AuthController],
