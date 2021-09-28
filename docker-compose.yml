@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  prod:
+    image: kaykybc/auth-rest-api:0.0.1
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: production
+    environment:
+      NODE_ENV: production
+    ports:
+      - ${API_PORT}:${API_PORT}
+  dev:
+    image: kaykybc/auth-rest-api:dev
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: development
+    environment:
+      NODE_ENV: development
+    ports:
+      - ${API_PORT}:${API_PORT}
+  database:
+    container_name: auth_database
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DATABASE_SCHEMA}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - ${DATABASE_PORT}:${DATABASE_PORT}
