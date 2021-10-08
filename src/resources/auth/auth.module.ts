@@ -5,17 +5,21 @@ import { UserModule } from '~@resources/user/user.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { env } from '~@environment/env.constants';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PasswordEncryptService } from '~@services/password-encrypt/password-encrypt.service';
+import { ConfigService } from '@nestjs/config';
+import { Environment } from '~@environment/env.constants';
 
 @Module({
   imports: [
     UserModule,
     PassportModule,
-    JwtModule.register({
-      secret: env.API_KEY,
-      signOptions: { expiresIn: env.SESSION_TIMEOUT + 's' },
+    JwtModule.registerAsync({
+      useFactory: async (configService: ConfigService) => {
+        return {
+          secret: configService.get<string>(Environment.API_KEY_KEY),
+        }
+      }
     }),
   ],
   controllers: [AuthController],

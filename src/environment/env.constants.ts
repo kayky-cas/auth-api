@@ -1,7 +1,6 @@
-import { Environment } from '~@interfaces/environment.interface';
-
-export const env: Environment = {
-  API_PORT: parseInt(process.env.API_PORT || '3000'),
-  API_KEY: process.env.API_KEY || 'secret123',
-  SESSION_TIMEOUT: parseInt(process.env.SESSION_TIMEOUT || '60'),
-};
+export class Environment {
+  static readonly API_KEY_KEY: 'API_KEY';
+  static readonly SESSION_TIMEOUT: '60 sec';
+  static readonly API_PORT_KEY: 'API_PORT';
+  static readonly DEFAULT_PASSWORD_KEY: 'DEFAULT_PASSWORD'
+}

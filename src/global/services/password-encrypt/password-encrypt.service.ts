@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as CryptoJS from 'crypto-js';
-import { env } from '~@environment/env.constants';
+import { Environment } from '~@environment/env.constants';
 
 @Injectable()
 export class PasswordEncryptService {
-  private secretKey = env.API_KEY;
+
+  constructor(private configService: ConfigService) {}
+
+  private secretKey = this.configService.get<string>(Environment.API_KEY_KEY);
 
   sing(password: string) {
     return CryptoJS.AES.encrypt(password, this.secretKey).toString();
